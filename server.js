@@ -1,8 +1,9 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
-var htmlroutes = require("../routing/htmlRoutes.js");
-var apiroutes = require("../routing/apiRoutes.js");
+var htmlroutes = require("/Users/luqiangmao/FriendsFinder/app/routing/htmlRoutes.js");
+
+//var apiroutes = require("/Users/luqiangmao/FriendsFinder/app/routing/apiRoutes.js");
 // Sets up the Express App
 // =============================================================
 var app = express();
@@ -14,28 +15,29 @@ app.use(bodyParser.json());
 
 app.use("/",htmlroutes);
 
-app.use("api/friends",apiroutes);
+//app.use("/api/friends",apiroutes);
 
+var fs=require('fs');
+var friends=fs.readFileSync('/Users/luqiangmao/FriendsFinder/app/data/friends.js', 'utf8');
 
-// Search for Specific Character (or all characters) - provides JSON
-// app.get("/api/tables", function(req, res) {
-//   var chosen = req.params.characters;
-
-//   if (chosen) {
-//     console.log(chosen);
-
-//     for (var i = 0; i < characters.length; i++) {
-//       if (chosen === characters[i].routeName) {
-//         return res.json(characters[i]);
-//       }
-//     }
-//     return res.json(false);
-//   }
-//   return res.json(characters);
-// });
+app.get("/api/friends", function(req, res) {
+    res.send(friends);
+    console.log(friends[1]);
+    //console.log("connected");
+    //res.json(friends);
+});
+  
+app.post("/api/friends", function(req, res) {
+    
+    var newfriend = req.body;
+    friends.push(newfriend);  
+    res.json(friends);
+});
 
 // Starts the server to begin listening
 // =============================================================
 app.listen(PORT, function() {
   console.log("App listening on PORT " + PORT);
 });
+
+

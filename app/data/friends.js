@@ -2,7 +2,7 @@
 [
   {
     "name": "Ahmed",
-    "photo": "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAq7AAAAJDAwYzI4NTQ4LWYwZWUtNGFkYS1hNTYwLTZjYzkwY2ViZDA3OA.jpg",
+    "photo": "https://cdn.shopify.com/s/files/1/1260/4791/products/action-cue.jpg?v=1487022243",
     "scores": [
        "5",
        "1",
