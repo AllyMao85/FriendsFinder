@@ -1,5 +1,5 @@
 
-[
+var friends = [
   {
     "name": "Ahmed",
     "photo": "https://cdn.shopify.com/s/files/1/1260/4791/products/action-cue.jpg?v=1487022243",
@@ -64,4 +64,6 @@
       "3"
     ]
   }
-]
+];
+
+module.exports = friends;

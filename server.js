@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 var path = require("path");
 var htmlroutes = require("/Users/luqiangmao/FriendsFinder/app/routing/htmlRoutes.js");
 
-//var apiroutes = require("/Users/luqiangmao/FriendsFinder/app/routing/apiRoutes.js");
+var apiroutes = require("/Users/luqiangmao/FriendsFinder/app/routing/apiRoutes.js");
 // Sets up the Express App
 // =============================================================
 var app = express();
@@ -13,26 +13,30 @@ var PORT = 3002;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/",htmlroutes);
+//app.use("/",htmlroutes);
 
 //app.use("/api/friends",apiroutes);
 
-var fs=require('fs');
-var friends=fs.readFileSync('/Users/luqiangmao/FriendsFinder/app/data/friends.js', 'utf8');
 
-app.get("/api/friends", function(req, res) {
-    res.send(friends);
-    console.log(friends[1]);
-    //console.log("connected");
-    //res.json(friends);
-});
+require("/Users/luqiangmao/FriendsFinder/app/routing/htmlRoutes.js")(app);
+require("/Users/luqiangmao/FriendsFinder/app/routing/apiRoutes.js")(app);
+
+// var fs=require('fs');
+// var friends=fs.readFileSync('/Users/luqiangmao/FriendsFinder/app/data/friends.js', 'utf8');
+
+// app.get("/api/friends", function(req, res) {
+//     res.send(friends);
+//     console.log(friends[1]);
+//     //console.log("connected");
+//     //res.json(friends);
+// });
   
-app.post("/api/friends", function(req, res) {
+// app.post("/api/friends", function(req, res) {
     
-    var newfriend = req.body;
-    friends.push(newfriend);  
-    res.json(friends);
-});
+//     var newfriend = req.body;
+//     friends.push(newfriend);  
+//     res.json(friends);
+// });
 
 // Starts the server to begin listening
 // =============================================================

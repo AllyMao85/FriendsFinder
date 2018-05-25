@@ -178,7 +178,7 @@
         </div>
         <div class="modal-body">
           <h2 id="match-name"></h2>
-          <img id="match-img" src="https://cdn.shopify.com/s/files/1/1260/4791/products/action-cue.jpg?v=1487022243" alt="">
+          <img id="match-img" src="https://cdn.shopify.com/s/files/1/1260/4791/products/action-cue.jpg?v=1487022243" alt="" width="200px">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -251,25 +251,28 @@
             $("#q10").val()
           ]
         };
-        console.log(userData);
+        console.log('userData: ', userData);
 
            // create function to find the best match, userData is the user input
-        // function findMatch(userData) {
-        //  var fs = require('fs');
-        //  var friends = fs.readFileSync('../data/friends.js', 'utf8');
-        //  var totaldiff = 0;
-        //  var diff = [];
-        //  for (var i=0; i<friends.length; i++) {
-        //     for (var n=0; n<10;n++) {
-        //         totaldiff += Math.abs(friends[i].scores[n]-userData.score[n]);
-        //     }
-        //     diff.push(totaldiff);   
-        //  }
-        //  console.log(diff);
-        //  var minDiff = Math.min(diff);
-        //  var minIndex = diff.indexOf(minDiff);
-        //  return friends[minIndex];
-        // }
+        function findMatch(userData, friends) {
+         
+         var totaldiff = 0;
+         var diff = [];
+         for (var i=0; i<friends.length; i++) {
+            if (userData.name===friends[i].name) {
+                continue;
+            } else {
+              for (var n=0; n<10;n++) {
+                  totaldiff += Math.abs(parseInt(friends[i].scores[n])-parseInt(userData.score[n]));
+               }
+               diff.push(totaldiff);   
+            };
+         }
+         console.log(diff);
+         var minDiff = Math.min(diff);
+         var minIndex = diff.indexOf(minDiff);
+         return friends[minIndex];
+        }
         // var matchFriend = findMatch(userData);
         // console.log(matchFriend);
 
@@ -280,17 +283,24 @@
 
         // AJAX post the data to the friends API.
         $.post("/api/friends", userData, function(data, status) {
-           console.log("Data: " + data + "\nStatus: " + status);
+           //console.log("Data: " + data + "\nStatus: " + status);
+             console.log('userData: ', userData);
+            //console.log(JSON.parse(data));
+            //  console.log('data: ', data[0].scores);
+            console.log(JSON.stringify(data));
+            var matchFriend = findMatch(userData, data);
+            console.log(matchFriend);
           // Grab the result from the AJAX post so that the best match's name and photo are displayed.
-          $("#match-name").text(data.name);
-          $("#match-img").attr("src", data.photo);
-
+          $("#match-name").text(matchFriend.name);
+          $("#match-img").attr("src", matchFriend.photo);
+        //   $("#match-name").text(data.name);
+        //   $("#match-img").attr("src", data.photo);
           // Show the modal with the best match
           $("#results-modal").modal("toggle");
 
         });
       } else {
-        alert("Please fill out all fields before submitting!");
+        alert("Please fill out all fields before submitting!"); 
       }
     });
 
